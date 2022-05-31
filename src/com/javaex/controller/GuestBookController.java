@@ -55,6 +55,13 @@ public class GuestBookController extends HttpServlet {
          WebUtil.redirect(request, response, "/guestbook2/gbc?action=addlist");
          //response.sendRedirect("/guestbook2/gbc?action=addList");
       }else if("deleteForm".equals(action)) {
+    	 
+    	  int no = Integer.parseInt(request.getParameter("no"));
+    	  GuestBookDao guestBookDao = new GuestBookDao(); 
+    	  GuestBookVo guestVo = guestBookDao.getGuest(no);
+    	 
+    	  request.setAttribute("guestVo", guestVo);
+    	  
          WebUtil.forward(request, response, "/WEB-INF/deleteForm.jsp");
          
          /*
