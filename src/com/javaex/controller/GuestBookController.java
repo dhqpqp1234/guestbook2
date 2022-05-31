@@ -26,7 +26,7 @@ public class GuestBookController extends HttpServlet {
       
       String action =  request.getParameter("action");
       
-      if("addList".equals(action)) {
+      if("addlist".equals(action)) {
          //데이터 가져오기
          GuestBookDao guestBookDao = new GuestBookDao();
          List<GuestBookVo> guestList = guestBookDao.guestbookList();
@@ -52,7 +52,7 @@ public class GuestBookController extends HttpServlet {
          GuestBookDao guestBookDao = new GuestBookDao();
          guestBookDao.insert(guestBookVo);
          
-         WebUtil.redirect(request, response, "/guestbook2/gbc?action=addList");
+         WebUtil.redirect(request, response, "/guestbook2/gbc?action=addlist");
          //response.sendRedirect("/guestbook2/gbc?action=addList");
       }else if("deleteForm".equals(action)) {
          WebUtil.forward(request, response, "/WEB-INF/deleteForm.jsp");

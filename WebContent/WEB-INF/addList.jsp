@@ -9,8 +9,7 @@
 <%
 
 
-GuestBookDao dao = new GuestBookDao();
-	List<GuestBookVo> list = dao.getList();
+	List<GuestBookVo> list =(List<GuestBookVo>)request.getAttribute("gList");
 %>
     
 <!DOCTYPE html>
@@ -22,6 +21,7 @@ GuestBookDao dao = new GuestBookDao();
 <body>
 	
 	<form action="./gbc" method= "get">
+		<input type="hidden" name="action" value="add">
 		<table border="1" width="500">
 			<tr>
 				<td>이름</td><td><input type="text" name="name"></td>
@@ -43,7 +43,7 @@ GuestBookDao dao = new GuestBookDao();
 	%>
 			<table width=510 border=1>
 				<tr>
-					<td>[<%=list.get(i).getNo() %>]</td>
+					<td><%=list.get(i).getNo() %></td>
 					<td><%=list.get(i).getName() %></td>
 					<td><%=list.get(i).getRegDate() %></td>
 					<td><a href="./deleteForm.jsp?no=<%=list.get(i).getNo() %>">삭제</a></td>
