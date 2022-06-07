@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+   
     
-    <%@ page import="java.util.List" %>
-<%@ page import="com.javaex.dao.GuestBookDao" %>
-<%@ page import="com.javaex.vo.GuestBookVo" %>
 
-
-<%
-
-
-	List<GuestBookVo> list =(List<GuestBookVo>)request.getAttribute("gList");
-%>
     
 <!DOCTYPE html>
 <html>
@@ -25,7 +19,7 @@
 		<table border="1" width="500">
 			<tr>
 				<td>이름</td><td><input type="text" name="name"></td>
-				<td>비밀번호</td><td><input type="password" name="pass"></td>
+				<td>비밀번호</td><td><input type="password" name="password"></td>
 			</tr>
 			<tr>
 				<td colspan=4><textarea name="content" cols=60 rows=5></textarea></td>
@@ -37,25 +31,20 @@
 	</form>
 	<br/>
 	
-	
-	<% 
-		for(int i=0; i<list.size();i++){
-	%>
-			<table width=510 border=1>
+	<c:forEach items="${gList}" var="guestVo" varStatus ="status">
+		<table width=510 border=1>
 				<tr>
-					<td><%=list.get(i).getNo() %></td>
-					<td><%=list.get(i).getName() %></td>
-					<td><%=list.get(i).getRegDate() %></td>
-					<td><a href="./gbc?action=deleteForm&no=<%=list.get(i).getNo() %>">삭제</a></td>
+					<td>${guestVo.no}</td>
+					<td>${guestVo.name}</td>
+					<td>${guestVo.regDate}</td>
+					<td><a href="./gbc?action=deleteForm&no=${guestVo.no}">삭제</a></td>
 				</tr>
 				<tr>
-					<td colspan=4><%=list.get(i).getContent() %></td>
+					<td colspan=4>${guestVo.content}</td>
 				</tr>
 			</table>
 		    <br/>
-	<% 
-		}
-	%>
+	</c:forEach>
 	
 </body>
 </html>

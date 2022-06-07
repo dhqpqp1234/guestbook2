@@ -52,15 +52,10 @@ public class GuestBookController extends HttpServlet {
          GuestBookDao guestBookDao = new GuestBookDao();
          guestBookDao.insert(guestBookVo);
          
-         WebUtil.redirect(request, response, "/guestbook2/gbc?action=addlist");
+         WebUtil.redirect(request, response, "/guestbook2/gbc?action=addList");
          //response.sendRedirect("/guestbook2/gbc?action=addList");
       }else if("deleteForm".equals(action)) {
     	 
-    	  int no = Integer.parseInt(request.getParameter("no"));
-    	  GuestBookDao guestBookDao = new GuestBookDao(); 
-    	  GuestBookVo guestVo = guestBookDao.getGuest(no);
-    	 
-    	  request.setAttribute("guestVo", guestVo);
     	  
          WebUtil.forward(request, response, "/WEB-INF/deleteForm.jsp");
          
@@ -70,21 +65,21 @@ public class GuestBookController extends HttpServlet {
          */
       }else if("delete".equals(action)) {
          
-         int no = Integer.parseInt(request.getParameter("no"));
-         String password = request.getParameter("password");
+         int no = Integer.parseInt(request.getParameter("no"));//addList정보가 담긴 no
+         String password = request.getParameter("password");//deletform에서 가져온 paasword
          
          GuestBookDao guestBookDao = new GuestBookDao(); 
-         GuestBookVo guestBookVo = (GuestBookVo) guestBookDao.guestbookList();
+         GuestBookVo guestBookVo = guestBookDao.getGuest(no);
          
          if(guestBookVo.getPassword().equals(password)) {
             
             int count = guestBookDao.delete(guestBookVo);
             
-            WebUtil.redirect(request, response, "/guestbook2/gbc?action=addList");
+            WebUtil.redirect(request, response, "/guestbook2/gbc?action=addlist");
             //response.sendRedirect("/guestbook2/gbc?action=addList");
             System.out.println(count);
          }else {
-            WebUtil.redirect(request, response, "/guestbook2/gbc?action=addList");
+            WebUtil.redirect(request, response, "/guestbook2/gbc?action=addlist");
             //response.sendRedirect("/guestbook2/gbc?action=addList");
             System.out.println("패스워드를 잘못입력하셨습니다.");
          }
